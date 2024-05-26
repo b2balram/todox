@@ -17,7 +17,7 @@ export default function PriorityRadio({selectedValue, handleChange}) {
         <span><strong>Priority</strong></span>
         <br/>
       <Radio {...controlProps(0)} color="success" />
-      <Radio {...controlProps(1)} color="default" />
+      <Radio {...controlProps(1)} color="warning" />
       <Radio
         {...controlProps(2)}
         sx={{

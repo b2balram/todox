@@ -4,7 +4,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-export default function TodoxDateTimePicker({label, onChange}) {
+export default function TodoxDateTimePicker({value, label, onChange}) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer
@@ -16,7 +16,7 @@ export default function TodoxDateTimePicker({label, onChange}) {
         ]}
       >
         <span><strong>{label}</strong></span>
-        <DateTimePicker onChange={onChange}/>
+        <DateTimePicker onChange={onChange} value={value}/>
       </DemoContainer>
     </LocalizationProvider>
   );

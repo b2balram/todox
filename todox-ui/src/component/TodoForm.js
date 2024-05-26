@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import TodoxDateTimePicker from './TodoxDateTimePicker';
 import PriorityRadio from './PriorityRadio';
+import dayjs from 'dayjs';
 
 export default function TodoForm({setFormState, formState}) {
     const [title, setTitle] = React.useState(formState?.title);
@@ -56,7 +57,7 @@ export default function TodoForm({setFormState, formState}) {
             }}
         />
         <br/><br/>
-        <TodoxDateTimePicker label="Due Date" onChange={(value) => setDueDate(value)}/>
+        <TodoxDateTimePicker label="Due Date" value={dayjs(dueDate)} onChange={(value) => setDueDate(value)}/>
         <br/>
         <PriorityRadio selectedValue={priority} handleChange={e => {console.log(e.target.value); setPriority(e.target.value)}}/>
     </Box>

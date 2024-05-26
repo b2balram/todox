@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { Container } from '@mui/material';
 import TodoForm from './TodoForm';
-import {createTodo} from '../actions/todoActions'
+import {createTodo, updateTodo} from '../actions/todoActions'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -28,7 +28,10 @@ export default function TodoFormDialog({open, setOpen, data}) {
   };
 
   const handleOnSubmit = () => {
-    createTodo(formState);
+    if(open == 1)
+        createTodo(formState).then(res => {setOpen(false)});
+    else if(open == 2)
+        updateTodo({...formState, _id: data._id}).then(res => {setOpen(false)});
   }
 
 

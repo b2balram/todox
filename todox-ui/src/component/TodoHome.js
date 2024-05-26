@@ -21,6 +21,15 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import TodoFormDialog from './TodoFormDialog';
 import { fetchAll } from '../actions/todoActions';
 import EditIcon from '@mui/icons-material/Edit';
+import CancelIcon from '@mui/icons-material/Cancel';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import dayjs from 'dayjs';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Icon } from '@mui/material';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import PersonIcon from '@mui/icons-material/Person';
+import { priorityColors } from '../constant';
+import { useUser } from '@descope/react-sdk';
 
 const StyledFab = styled(Fab)({
   position: 'absolute',
@@ -37,6 +46,7 @@ export default function BottomAppBar() {
   const [todoList, setTodoList] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [activeFormData, setActiveFormData] = React.useState({});
+  const { user } = useUser();
 
   React.useEffect(() => {
     setLoading(true);
@@ -48,14 +58,14 @@ export default function BottomAppBar() {
       setLoading(false);
       console.log("Error while fetching todo list.", err)
     })
-  }, [])
+  }, [open])
 
   return (
     <React.Fragment>
       <CssBaseline />
       <Paper square sx={{ pb: '50px' }}>
-        <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
-          TODOX
+        <Typography variant="h4" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
+          <strong>TODOX</strong>
         </Typography>
         <List sx={{ mb: 2 }}>
           
@@ -73,11 +83,16 @@ export default function BottomAppBar() {
               )}
               <ListItemButton>
                 <ListItemAvatar>
-                  <Avatar alt="Profile Picture" />
+                  <ArrowUpwardIcon color={priorityColors[todo.priority]} />
+                  <AssignmentIcon/>
                 </ListItemAvatar>
                 <ListItemText primary={todo.title} secondary={todo.description} />
+                <span style={{float: 'right'}}>{dayjs(todo.dueDate).toString()}</span>
                 <IconButton onClick={() => {setActiveFormData(todo); setOpen(2)}}>
                   <EditIcon/>
+                </IconButton>
+                <IconButton onClick={() => {setActiveFormData(todo); setOpen(2)}}>
+                  <CancelIcon/>
                 </IconButton>
               </ListItemButton>
             </React.Fragment>
@@ -87,18 +102,16 @@ export default function BottomAppBar() {
       <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
           <IconButton color="inherit" aria-label="open drawer">
-            <MenuIcon />
+            <AssignmentTurnedInIcon />
           </IconButton>
           <StyledFab color="secondary" aria-label="add" onClick={() => {setOpen(1)}}>
             <AddIcon />
           </StyledFab>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton color="inherit">
-            <SearchIcon />
+            <PersonIcon />
           </IconButton>
-          <IconButton color="inherit">
-            <MoreIcon />
-          </IconButton>
+          <span>{user.name}</span>
         </Toolbar>
       </AppBar>
       <TodoFormDialog open={open} setOpen={setOpen} data={activeFormData}/>
