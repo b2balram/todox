@@ -19,7 +19,7 @@ import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import TodoFormDialog from './TodoFormDialog';
-import { fetchAll } from '../actions/todoActions';
+import { cancelTodo, fetchAll } from '../actions/todoActions';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
@@ -91,7 +91,11 @@ export default function BottomAppBar() {
                 <IconButton onClick={() => {setActiveFormData(todo); setOpen(2)}}>
                   <EditIcon/>
                 </IconButton>
-                <IconButton onClick={() => {setActiveFormData(todo); setOpen(2)}}>
+                <IconButton onClick={() => {
+                  cancelTodo(todo).then(res => {
+                    console.log("todo cancelled");
+                  })
+                }}>
                   <CancelIcon/>
                 </IconButton>
               </ListItemButton>

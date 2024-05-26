@@ -1,18 +1,25 @@
-const TodoModel = require('../db/schema/todo')
+const TodoModel = require('../db/schema/todo');
+const { parseJwt } = require('../utils');
 
 // Create and Save a new user
 exports.create = async (req, res) => {
+    const authInfo = req.authInfo;
+    const userJwt = parseJwt(authInfo.jwt)
+
     if (!req.body.title && !req.body.description && !req.body.dueDate && !req.body.priority) {
         res.status(400).send({ message: "Content can not be empty!" });
         return
     }
     
     const todo = new TodoModel({
+        user: userJwt.email,
         title: req.body.title,
         description: req.body.description,
         dueDate: new Date(req.body.dueDate),
         priority: req.body.priority
     });
+
+    console.log("Todo Create Request...", todo);
     
     await todo.save().then(data => {
         res.send({
@@ -20,6 +27,7 @@ exports.create = async (req, res) => {
             todo:data
         });
     }).catch(err => {
+        console.log("Error while todo create...", err);
         res.status(500).send({
             message: err.message || "Some error occurred while creating todo"
         });
@@ -28,8 +36,11 @@ exports.create = async (req, res) => {
 
 // Retrieve all todos from the database.
 exports.findAll = async (req, res) => {
+    const authInfo = req.authInfo;
+    const userJwt = parseJwt(authInfo.jwt)
+    
     try {
-        const todo = await TodoModel.find();
+        const todo = await TodoModel.find({user: userJwt.email}) ;
         res.status(200).json(todo);
     } catch(error) {
         res.status(404).json({message: error.message});
@@ -64,6 +75,26 @@ exports.update = async (req, res) => {
             });
         }else{
             res.send({ message: "Todo updated successfully." })
+        }
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message
+        });
+    });
+};
+
+// Cancel a todo by the id in the request
+exports.cancel = async (req, res) => {
+    
+    const id = req.params.id;
+    
+    await TodoModel.findByIdAndUpdate({_id: id}, {cancelled: true}).then(data => {
+        if (!data) {
+            res.status(404).send({
+                message: `Todo not found.`
+            });
+        }else{
+            res.send({ message: "Todo cancelled successfully." })
         }
     }).catch(err => {
         res.status(500).send({

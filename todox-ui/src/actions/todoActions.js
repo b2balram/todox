@@ -31,6 +31,20 @@ export const updateTodo = async(todo) => {
     }
 }
 
+export const cancelTodo = async(todo) => {
+    const sessionToken = getSessionToken();
+    try {
+    return await axios.put(`${serverUrl}/${todo._id}`, {...todo, status: 2}, {
+            headers: {
+              Accept: 'application/json',
+              Authorization: 'Bearer ' + sessionToken,
+            }
+          })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export const fetchAll = async (todo) => {
     const sessionToken = getSessionToken();
 
