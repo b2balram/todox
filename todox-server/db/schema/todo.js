@@ -18,6 +18,18 @@ var schema = new mongoose.Schema({
     status: {
         type: Number,
         default: 0
+    },
+    recur: {
+        enabled: Boolean,
+        mode: Number
+    },
+    reminder: {
+        enabled: Boolean,
+        channels: {
+            inApp: Boolean,
+            email: Boolean
+        },
+        beforeMinutes: Number
     }
 });
 

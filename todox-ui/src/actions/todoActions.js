@@ -1,60 +1,48 @@
 import { getSessionToken } from '@descope/react-sdk';
-import axios from 'axios'
+import axios from "axios";
 
-const serverUrl = process.env.REACT_APP_SERVER_URL
+const API = axios.create({ baseURL: process.env.REACT_APP_SERVER_URL });
+
+API.interceptors.request.use((req) => {
+  req.headers.authorization = `Bearer ${getSessionToken()}`;
+  return req;
+});
 
 export const createTodo = async(todo) => {
-    const sessionToken = getSessionToken();
     try {
-        return await axios.post(serverUrl, todo, {
-            headers: {
-              Accept: 'application/json',
-              Authorization: 'Bearer ' + sessionToken,
-            }
-          })
+        return await API.post("", todo)
     } catch (err) {
         console.log(err);
     }
 }
 
 export const updateTodo = async(todo) => {
-    const sessionToken = getSessionToken();
     try {
-        return await axios.put(`${serverUrl}/${todo._id}`, todo, {
-            headers: {
-              Accept: 'application/json',
-              Authorization: 'Bearer ' + sessionToken,
-            }
-          })
+        return await API.put(`/${todo._id}`, todo)
     } catch (err) {
         console.log(err);
     }
 }
 
 export const cancelTodo = async(todo) => {
-    const sessionToken = getSessionToken();
     try {
-    return await axios.put(`${serverUrl}/${todo._id}`, {...todo, status: 2}, {
-            headers: {
-              Accept: 'application/json',
-              Authorization: 'Bearer ' + sessionToken,
-            }
-          })
+    return await API.put(`/${todo._id}`, {...todo, status: 2})
     } catch (err) {
         console.log(err);
     }
 }
 
-export const fetchAll = async (todo) => {
-    const sessionToken = getSessionToken();
+export const deleteTodo = async(todo) => {
+  try {
+  return await API.delete(`/${todo._id}`)
+  } catch (err) {
+      console.log(err);
+  }
+}
 
+export const fetchAll = async (todo) => {
     try {
-        return await axios.get(serverUrl, {
-            headers: {
-              Accept: 'application/json',
-              Authorization: 'Bearer ' + sessionToken,
-            }
-          })
+        return await API.get("")
     } catch (err) {
         console.log(err);
     }

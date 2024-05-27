@@ -16,7 +16,16 @@ exports.create = async (req, res) => {
         title: req.body.title,
         description: req.body.description,
         dueDate: new Date(req.body.dueDate),
-        priority: req.body.priority
+        priority: req.body.priority,
+        recur: {
+            enabled: req.body.recur.enabled,
+            mode: req.body.recur.mode
+        },
+        reminder: {
+            enabled: req.body.reminder.enabled,
+            channels: req.body.reminder.channels,
+            beforeMinutes: req.body.reminder.beforeMinutes
+        }
     });
 
     console.log("Todo Create Request...", todo);
@@ -103,21 +112,21 @@ exports.cancel = async (req, res) => {
     });
 };
 
-// // Delete a user with the specified id in the request
-// exports.destroy = async (req, res) => {
-//     await UserModel.findByIdAndRemove(req.params.id).then(data => {
-//         if (!data) {
-//           res.status(404).send({
-//             message: `User not found.`
-//           });
-//         } else {
-//           res.send({
-//             message: "User deleted successfully!"
-//           });
-//         }
-//     }).catch(err => {
-//         res.status(500).send({
-//           message: err.message
-//         });
-//     });
-// };
+// Delete a user with the specified id in the request
+exports.destroy = async (req, res) => {
+    await TodoModel.findByIdAndDelete(req.params.id).then(data => {
+        if (!data) {
+          res.status(404).send({
+            message: `Todo not found.`
+          });
+        } else {
+          res.send({
+            message: "Todo deleted successfully!"
+          });
+        }
+    }).catch(err => {
+        res.status(500).send({
+          message: err.message
+        });
+    });
+};

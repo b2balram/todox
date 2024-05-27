@@ -13,23 +13,20 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
-import Avatar from '@mui/material/Avatar';
-import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
-import SearchIcon from '@mui/icons-material/Search';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import TodoFormDialog from './TodoFormDialog';
-import { cancelTodo, fetchAll } from '../actions/todoActions';
+import { cancelTodo, fetchAll, deleteTodo } from '../actions/todoActions';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import dayjs from 'dayjs';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { Icon } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import PersonIcon from '@mui/icons-material/Person';
 import { priorityColors } from '../constant';
 import { useUser } from '@descope/react-sdk';
+import Novu from './Novu';
 
 const StyledFab = styled(Fab)({
   position: 'absolute',
@@ -45,10 +42,14 @@ export default function BottomAppBar() {
   const [open, setOpen] = React.useState(0);
   const [todoList, setTodoList] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  const [activeFormData, setActiveFormData] = React.useState({});
+  const [activeFormData, setActiveFormData] = React.useState(undefined);
   const { user } = useUser();
 
   React.useEffect(() => {
+    refresh()
+  }, [open])
+
+  const refresh = () => {
     setLoading(true);
     fetchAll().then(res => {
       console.log("res..", res)
@@ -58,7 +59,7 @@ export default function BottomAppBar() {
       setLoading(false);
       console.log("Error while fetching todo list.", err)
     })
-  }, [open])
+  }
 
   return (
     <React.Fragment>
@@ -91,12 +92,19 @@ export default function BottomAppBar() {
                 <IconButton onClick={() => {setActiveFormData(todo); setOpen(2)}}>
                   <EditIcon/>
                 </IconButton>
-                <IconButton onClick={() => {
+                <IconButton disabled={todo.status == 2} onClick={() => {
                   cancelTodo(todo).then(res => {
-                    console.log("todo cancelled");
+                    refresh();
                   })
                 }}>
                   <CancelIcon/>
+                </IconButton>
+                <IconButton onClick={() => {
+                  deleteTodo(todo).then(res => {
+                    refresh();
+                  })
+                }}>
+                  <DeleteIcon/>
                 </IconButton>
               </ListItemButton>
             </React.Fragment>
@@ -112,6 +120,9 @@ export default function BottomAppBar() {
             <AddIcon />
           </StyledFab>
           <Box sx={{ flexGrow: 1 }} />
+          <IconButton color="inherit">
+            <Novu/>
+          </IconButton>
           <IconButton color="inherit">
             <PersonIcon />
           </IconButton>
