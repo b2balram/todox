@@ -21,7 +21,8 @@ var schema = new mongoose.Schema({
     },
     recur: {
         enabled: Boolean,
-        mode: Number
+        mode: Number,
+        recurred: { type : Boolean, default: false }
     },
     reminder: {
         enabled: Boolean,
@@ -30,7 +31,8 @@ var schema = new mongoose.Schema({
             email: Boolean
         },
         beforeMinutes: Number
-    }
+    },
+    createdAt: { type : Date, default: Date.now }
 });
 
 var todo = new mongoose.model('Todo', schema);

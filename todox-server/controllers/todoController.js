@@ -25,7 +25,8 @@ exports.create = async (req, res) => {
             enabled: req.body.reminder.enabled,
             channels: req.body.reminder.channels,
             beforeMinutes: req.body.reminder.beforeMinutes
-        }
+        },
+        createdAt: new Date()
     });
 
     console.log("Todo Create Request...", todo);

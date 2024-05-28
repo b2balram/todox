@@ -1,24 +1,71 @@
+const { default: mongoose } = require('mongoose');
 const TodoModel = require('../db/schema/todo');
 var CronJob = require('cron').CronJob;
 
-new CronJob('*/5 * * * *', function(){
+function needsToCreateTodo(createdAt, mode) {
+    console.log("creationDate", createdAt);
+    console.log("mode", mode);
+    const now = new Date();
+    return increaseDateByMode(createdAt, mode) < now;
+}
+
+function increaseDateByMode(date, mode){
+    const newDate = new Date(date);
+
+    switch (mode) {
+        case 1:
+            return newDate.setDate(newDate.getDate() + 1);;
+
+        case 2:
+            return newDate.setDate(newDate.getDate() + 7);
+
+        case 3:
+            return newDate.setMonth(newDate.getMonth() + 1);
+
+        default:
+            throw new Error('Invalid mode');
+    }
+}
+
+new CronJob('*/10 * * * * *', function(){
     try {
         console.log("running recurrance scheduler...")
-        const todos = TodoModel.find({cancelled: false, recur: {enabled: true}});
-        console.log("todos fetched successfully")
-        todos.array.forEach(todo => {
-            if(todo.reminder.enabled){
-                console.log("reminder enabled for ", todo._id)
-                if(todo.reminder.inApp){
-                    console.log("reminding inApp for ", todo._id)
-                    inAppNotification(todo.title, todo.description, todo.user, todo._id)
-                }
-                if(todo.reminder.email){
-                    console.log("reminding email for ", todo._id)
-                    emailNotification(todo.title, todo.description, todo.user, todo._id)
-                }
-            } 
-        });
+        TodoModel.find({status: 0, "recur.enabled": true, "recur.recurred": false}).then(todos => {
+            todos.forEach(todo => {
+                console.log("checking recurrance for todo ", todo._id);
+                if(needsToCreateTodo(todo.createdAt, todo.recur.mode)){
+                    const newTodo = new TodoModel({
+                        user: todo.user,
+                        title: todo.title,
+                        description: todo.description,
+                        dueDate: increaseDateByMode(todo.dueDate, todo.recur.mode),
+                        priority: todo.priority,
+                        recur: {
+                            enabled: todo.recur.enabled,
+                            mode: todo.recur.mode
+                        },
+                        reminder: {
+                            enabled: todo.reminder.enabled,
+                            channels: todo.reminder.channels,
+                            beforeMinutes: todo.reminder.beforeMinutes
+                        },
+                        createdAt: new Date()
+                    });
+                
+                    console.log("Todo Create Request...", newTodo);
+                    
+                    newTodo.save().then(data => {
+                        console.log("Todo created successfully!! ", todo._id)
+                        todo.recur.enabled = false;
+                        todo.save()
+                    }).catch(err => {
+                        console.log("Error while todo create...", err)
+                    });
+                } 
+            });
+        }).catch(err => {
+            console.log("error while fetching data from db", err);
+        })
     } catch(error) {
         console.log("Something went wrong while running scheduler...", error)
     }

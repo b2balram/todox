@@ -9,6 +9,7 @@ const port = process.env.PORT || 5000;
 
 require('./db/connection');
 require("./scheduler/reminderScheduler")
+require("./scheduler/recurrenceScheduler")
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
