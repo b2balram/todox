@@ -27,6 +27,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import { priorityColors } from '../constant';
 import { useUser } from '@descope/react-sdk';
 import Novu from './Novu';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import { Divider } from '@mui/material';
 
 const StyledFab = styled(Fab)({
   position: 'absolute',
@@ -36,6 +38,44 @@ const StyledFab = styled(Fab)({
   right: 0,
   margin: '0 auto',
 });
+
+function timeDifference(previous) {
+
+  var current = new Date()
+  previous = new Date(previous)
+
+  var msPerMinute = 60 * 1000;
+  var msPerHour = msPerMinute * 60;
+  var msPerDay = msPerHour * 24;
+  var msPerMonth = msPerDay * 30;
+  var msPerYear = msPerDay * 365;
+
+  var elapsed = previous - current;
+
+  if (elapsed < msPerMinute) {
+       return Math.round(elapsed/1000) + ' seconds';   
+  }
+
+  else if (elapsed < msPerHour) {
+       return Math.round(elapsed/msPerMinute) + ' minutes';   
+  }
+
+  else if (elapsed < msPerDay ) {
+       return Math.round(elapsed/msPerHour ) + ' hours';   
+  }
+
+  else if (elapsed < msPerMonth) {
+      return 'approximately ' + Math.round(elapsed/msPerDay) + ' days';   
+  }
+
+  else if (elapsed < msPerYear) {
+      return 'approximately ' + Math.round(elapsed/msPerMonth) + ' months';   
+  }
+
+  else {
+      return 'approximately ' + Math.round(elapsed/msPerYear ) + ' years';   
+  }
+}
 
 export default function BottomAppBar() {
 
@@ -66,29 +106,19 @@ export default function BottomAppBar() {
       <CssBaseline />
       <Paper square sx={{ pb: '50px' }}>
         <Typography variant="h4" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
-          <strong>TODOX</strong>
+          <strong>TodoX</strong>
         </Typography>
         <List sx={{ mb: 2 }}>
           
           {todoList.map((todo) => (
             <React.Fragment key={todo._id}>
-              {todo._id === 1 && (
-                <ListSubheader sx={{ bgcolor: 'background.paper' }}>
-                  Today
-                </ListSubheader>
-              )}
-              {todo._id === 3 && (
-                <ListSubheader sx={{ bgcolor: 'background.paper' }}>
-                  Yesterday
-                </ListSubheader>
-              )}
               <ListItemButton>
                 <ListItemAvatar>
-                  <ArrowUpwardIcon color={priorityColors[todo.priority]} />
-                  <AssignmentIcon/>
+                <ArrowUpwardIcon color={priorityColors[todo.priority]} fontSize='large' />
                 </ListItemAvatar>
                 <ListItemText primary={todo.title} secondary={todo.description} />
-                <span style={{float: 'right'}}>{dayjs(todo.dueDate).toString()}</span>
+                <span>due in {timeDifference(todo.dueDate)}</span>
+                {todo.reminder.enabled && <NotificationsActiveIcon color='primary'/>}
                 <IconButton onClick={() => {setActiveFormData(todo); setOpen(2)}}>
                   <EditIcon/>
                 </IconButton>
@@ -116,7 +146,7 @@ export default function BottomAppBar() {
           <IconButton color="inherit" aria-label="open drawer">
             <AssignmentTurnedInIcon />
           </IconButton>
-          <StyledFab color="secondary" aria-label="add" onClick={() => {setOpen(1)}}>
+          <StyledFab aria-label="add" onClick={() => {setActiveFormData({}); setOpen(1)}}>
             <AddIcon />
           </StyledFab>
           <Box sx={{ flexGrow: 1 }} />

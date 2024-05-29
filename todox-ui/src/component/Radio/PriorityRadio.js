@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { pink } from '@mui/material/colors';
 import Radio from '@mui/material/Radio';
+import { FormControlLabel } from '@mui/material';
 
 export default function PriorityRadio({selectedValue, handleChange}) {
 
@@ -16,9 +17,9 @@ export default function PriorityRadio({selectedValue, handleChange}) {
     <div>
         <span><strong>Priority</strong></span>
         <br/>
-      <Radio {...controlProps(0)} color="success" />
-      <Radio {...controlProps(1)} color="warning" />
-      <Radio
+      <FormControlLabel label="Low" control={<Radio {...controlProps(0)} color="success"/>}/>
+      <FormControlLabel label="Medium" control={<Radio {...controlProps(1)} color="warning"/>}/>
+      <FormControlLabel label="High" control={<Radio
         {...controlProps(2)}
         sx={{
           color: pink[800],
@@ -26,7 +27,7 @@ export default function PriorityRadio({selectedValue, handleChange}) {
             color: pink[600],
           },
         }}
-      />
+      />}/>
     </div>
   );
 }

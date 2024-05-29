@@ -54,7 +54,7 @@ export default function TodoFormDialog({open, setOpen, data}) {
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Sound
+              {open == 1?"Create Todo":"Update Todo"}
             </Typography>
             <Button autoFocus color="inherit" onClick={handleOnSubmit}>
               save
