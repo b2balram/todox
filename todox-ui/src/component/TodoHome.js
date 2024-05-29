@@ -146,7 +146,7 @@ export default function BottomAppBar() {
           <IconButton color="inherit" aria-label="open drawer">
             <AssignmentTurnedInIcon />
           </IconButton>
-          <StyledFab aria-label="add" onClick={() => {setActiveFormData({}); setOpen(1)}}>
+          <StyledFab aria-label="add" onClick={() => {setActiveFormData(undefined); setOpen(1)}}>
             <AddIcon />
           </StyledFab>
           <Box sx={{ flexGrow: 1 }} />
