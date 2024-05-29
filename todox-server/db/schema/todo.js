@@ -30,7 +30,7 @@ var schema = new mongoose.Schema({
             inApp: Boolean,
             email: Boolean
         },
-        beforeMinutes: Number
+        beforeHour: Number
     },
     createdAt: { type : Date, default: Date.now }
 });

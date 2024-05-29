@@ -24,7 +24,7 @@ exports.create = async (req, res) => {
         reminder: {
             enabled: req.body.reminder.enabled,
             channels: req.body.reminder.channels,
-            beforeMinutes: req.body.reminder.beforeMinutes
+            beforeHour: req.body.reminder.beforeHour
         },
         createdAt: new Date()
     });

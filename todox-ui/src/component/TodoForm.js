@@ -25,7 +25,7 @@ export default function TodoForm({setFormState, formState}) {
                 inApp: false,
                 email: false
             },
-            beforeMinutes: 0
+            beforeHour: 0
         }
     }
 
@@ -105,15 +105,15 @@ export default function TodoForm({setFormState, formState}) {
             <TextField
                 required
                 margin="dense"
-                id="Before Minutes"
-                name="Before Minutes"
-                label="Before Minutes"
+                id="Before Hours"
+                name="Before Hours"
+                label="Before Hours"
                 type="number"
-                value={reminder?.beforeMinutes}
+                value={reminder?.beforeHour}
                 fullWidth
                 variant="standard"
                 onChange={e => {
-                    setReminder({...reminder, beforeMinutes: e.target.value})
+                    setReminder({...reminder, beforeHour: e.target.value})
                 }}
             />
         </>
