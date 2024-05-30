@@ -89,15 +89,14 @@ Start the backend server:
 sh
 Copy code
 cd todox-server
-npm install
-node server
-
+npm start
+# or
+yarn start
 Start the frontend server:
 
 sh
 Copy code
 cd ../todox-ui
-npm install
 npm start
 # or
 yarn start
@@ -131,4 +130,7 @@ This project is licensed under the MIT License. See the LICENSE file for details
 Contact
 For any questions or suggestions, feel free to contact:
 
-Email: vishwakarmabalram2@gmail.com
+Email: your-email@example.com
+GitHub: @your-username
+Twitter: @your-twitter-handle
+I've replaced the placeholder values with descriptive text to indicate where the actual values should be placed. If you have any further adjustments or questions, feel free to let me know!
