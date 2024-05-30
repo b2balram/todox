@@ -66,7 +66,6 @@ A comprehensive Todo application built with ReactJS for the frontend and Express
     MONGODB_URL='your_mongodb_url_here'
     DESCOPE_PROJECT_ID='your_descope_project_id_here'
     NOVU_API_KEY='your_novu_api_key_here'
-    NOVU_SUBSCRIBER_ID='your_novu_subscriber_id_here'
     ENABLE_RECURRANCE_SCHEDULER=false
     ENABLE_REMINDER_SCHEDULER=false
     RECURRANCE_SCHEDULER_CRON_EXP='*/10 * * * * *'
@@ -78,7 +77,6 @@ A comprehensive Todo application built with ReactJS for the frontend and Express
     ```env
     REACT_APP_SERVER_URL=http://localhost:5000/todo
     REACT_APP_DESCOPE_PROJECT_ID='your_descope_project_id_here'
-    REACT_APP_NOVU_SUBSCRIBER_ID='your_novu_subscriber_id_here'
     REACT_APP_APPLICATION_IDENTIFIER='your_application_identifier_here'
     ```
 
