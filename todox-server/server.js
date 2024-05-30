@@ -11,8 +11,9 @@ require('./db/connection');
 require("./scheduler/reminderScheduler")
 require("./scheduler/recurrenceScheduler")
 
-app.use(cors())
-app.options('*', cors())
+app.use(cors({
+    origin: 'https://todox-mskr.onrender.com'
+  }));
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json())
