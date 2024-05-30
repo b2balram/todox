@@ -1,70 +1,134 @@
-# Getting Started with Create React App
+Todo Application
+Table of Contents
+Description
+Features
+Technologies Used
+Installation
+Usage
+Contributing
+License
+Contact
+Description
+A comprehensive Todo application built with ReactJS for the frontend and ExpressJS for the backend. This application provides users with robust task management capabilities.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Features
+Task Management:
 
-## Available Scripts
+Users can list, create, modify, and delete todo items through an intuitive web interface.
+Each todo item will have fields for title, description, due date, priority, and status (complete/incomplete).
+Cancellation Option:
 
-In the project directory, you can run:
+Todo items can be marked as canceled, providing users with the flexibility to manage unexpected changes or cancellations.
+Reminders:
 
-### `npm start`
+Users can set reminders for individual todo items, receiving notifications or alerts based on their preferences.
+Reminders can be customized to suit the user's schedule and preferences.
+Recurring Tasks:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Todo items can be configured to be recurring in nature, allowing users to set daily, weekly, or custom recurring patterns.
+Recurring tasks will automatically generate new instances based on the specified recurrence rules.
+Technologies Used
+Frontend: ReactJS
+Backend: ExpressJS
+Database: MongoDB
+Notifications: Novu
+Authentication and Authorization: Descope
+Others: Axios for HTTP requests, Bootstrap for styling
+Installation
+Prerequisites
+Node.js (v14 or later)
+npm or yarn
+Steps
+Clone the repository:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+sh
+Copy code
+git clone https://github.com/username/todo-app.git
+cd todo-app
+Install dependencies for the backend:
 
-### `npm test`
+sh
+Copy code
+cd todox-server
+npm install
+# or
+yarn install
+Install dependencies for the frontend:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+sh
+Copy code
+cd ../todox-ui
+npm install
+# or
+yarn install
+Set up environment variables:
 
-### `npm run build`
+Backend Environment Variables
+Create a .env file in the todox-server directory with the following content:
+env
+Copy code
+PORT=5000
+MONGODB_URL='your_mongodb_url_here'
+DESCOPE_PROJECT_ID='your_descope_project_id_here'
+NOVU_API_KEY='your_novu_api_key_here'
+NOVU_SUBSCRIBER_ID='your_novu_subscriber_id_here'
+ENABLE_RECURRANCE_SCHEDULER=false
+ENABLE_REMINDER_SCHEDULER=false
+RECURRANCE_SCHEDULER_CRON_EXP='*/10 * * * * *'
+REMINDER_SCHEDULER_CRON_EXP='*/10 * * * * *'
+Frontend Environment Variables
+Create a .env file in the todox-ui directory with the following content:
+env
+Copy code
+REACT_APP_SERVER_URL=http://localhost:5000/todo
+REACT_APP_DESCOPE_PROJECT_ID='your_descope_project_id_here'
+REACT_APP_NOVU_SUBSCRIBER_ID='your_novu_subscriber_id_here'
+REACT_APP_APPLICATION_IDENTIFIER='your_application_identifier_here'
+Start the backend server:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+sh
+Copy code
+cd todox-server
+npm install
+node server
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Start the frontend server:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+sh
+Copy code
+cd ../todox-ui
+npm install
+npm start
+# or
+yarn start
+Usage
+Once both the backend and frontend servers are running, you can access the application by navigating to http://localhost:3000 in your web browser.
 
-### `npm run eject`
+Example
+Add a new task: Enter the task details (title, description, due date, priority) and click "Add".
+Update a task: Click on a task to edit its details.
+Delete a task: Click the delete button next to a task.
+Mark a task as completed: Check the checkbox next to a task.
+Cancel a task: Mark the task as canceled.
+Set reminders: Configure reminders for tasks based on your schedule.
+Recurring tasks: Set tasks to recur daily, weekly, or according to a custom schedule.
+Contributing
+We welcome contributions! Please follow these steps to contribute:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+How to Contribute
+Fork the repository
+Create a new branch (git checkout -b feature-branch)
+Make your changes
+Commit your changes (git commit -m 'Add some feature')
+Push to the branch (git push origin feature-branch)
+Open a Pull Request
+Code of Conduct
+Please adhere to the project's code of conduct.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+License
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Contact
+For any questions or suggestions, feel free to contact:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Email: vishwakarmabalram2@gmail.com
