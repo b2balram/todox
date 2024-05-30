@@ -12,6 +12,8 @@ require("./scheduler/reminderScheduler")
 require("./scheduler/recurrenceScheduler")
 
 app.use(cors())
+app.options('*', cors())
+
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(authMiddleware)
