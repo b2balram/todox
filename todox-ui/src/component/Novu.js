@@ -5,9 +5,9 @@ import {
   NotificationBell,
 } from '@novu/notification-center';
 
-export default function Novu() {
+export default function Novu({subscriberId}) {
   return (
-    <NovuProvider subscriberId={process.env.REACT_APP_NOVU_SUBSCRIBER_ID} applicationIdentifier={process.env.REACT_APP_APPLICATION_IDENTIFIER}>
+    <NovuProvider subscriberId={subscriberId} applicationIdentifier={process.env.REACT_APP_APPLICATION_IDENTIFIER}>
       <PopoverNotificationCenter colorScheme={'light'}>
         {({ unseenCount }) => <NotificationBell unseenCount={unseenCount} colorScheme='light'/>}
       </PopoverNotificationCenter>

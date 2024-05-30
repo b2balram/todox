@@ -151,7 +151,7 @@ export default function BottomAppBar() {
           </StyledFab>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton color="inherit">
-            <Novu/>
+            <Novu subscriberId={user.email}/>
           </IconButton>
           <IconButton color="inherit">
             <PersonIcon />

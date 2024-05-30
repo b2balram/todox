@@ -12,7 +12,7 @@ exports.emailNotification = async (title,description,email,Id) => {
 
     await novu.trigger('onboarding-workflow', {
         to: {
-          subscriberId: subscriberId,
+          subscriberId: email,
           email: email
         },
         payload: {
@@ -24,13 +24,13 @@ exports.emailNotification = async (title,description,email,Id) => {
 
 exports.inAppNotification = async (title,description,email,Id) => {
 
-    await novu.subscribers.identify(subscriberId, {
+    await novu.subscribers.identify(email, {
         email: email
     });
 
     await novu.trigger('in-app-notification', {
         to: {
-            subscriberId: subscriberId
+            subscriberId: email
         },
         payload: {
             todoTitle: title,

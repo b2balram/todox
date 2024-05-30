@@ -12,7 +12,7 @@ require("./scheduler/reminderScheduler")
 require("./scheduler/recurrenceScheduler")
 
 app.use(cors({
-    origin: 'https://todox-mskr.onrender.com'
+    origin: ['https://todox-mskr.onrender.com', 'http://localhost:3000']
   }));
 
 app.use(bodyParser.urlencoded({ extended: true }))
