@@ -17,12 +17,12 @@ export default function TodoForm({setFormState, formState}) {
         status: 0,
         recur: {
             enabled: false,
-            mode: 0
+            mode: 1
         },
         reminder: {
             enabled: false,
             channels: {
-                inApp: false,
+                inApp: true,
                 email: false
             },
             beforeHour: 0

@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
 
 export default function ReminderChannelRadio({selectedValue, handleChange}) {
-
+  console.log("selectedValue...", selectedValue);
+  
   const controlProps = (item) => ({
     checked: selectedValue[item],
     onChange: (e) => {handleChange({

@@ -6,6 +6,11 @@ import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from '@descope/react-sdk';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+if(process.env.NODE_ENV == "production"){
+  console.log = () => {};
+}
+
 root.render(
   <React.StrictMode>
     <AuthProvider projectId={process.env.REACT_APP_DESCOPE_PROJECT_ID}>
